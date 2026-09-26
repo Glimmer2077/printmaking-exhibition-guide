@@ -3,3 +3,55 @@
 .art-grid{align-items:start}.work-total{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;font-size:14px;color:var(--muted);letter-spacing:0;font-weight:400;margin-left:12px}.art-image{text-decoration:none;cursor:zoom-in}.explanation{margin:19px 0}.explanation h4{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 6px}.explanation p{font-size:15px;line-height:1.9;margin:0;color:#555950}.source-links{display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}.source-links a{font-size:12px}.catalog-note{margin-top:28px;padding:18px 0;border-bottom:1px solid var(--line)}.catalog-note p{max-width:850px}.work-kind{display:inline-block;color:var(--accent);font-size:12px;letter-spacing:2px;border:1px solid var(--line);padding:3px 8px;margin-bottom:20px}.medium{line-height:1.8;margin-top:6px}.prompt{margin-top:16px}summary{font-weight:500;color:var(--accent)}
 
 @media(min-width:651px) and (max-width:1000px){.art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Clickable artwork cards and detailed artwork dialog */
+.art-card{position:relative;--art-image-height:286px;--card-top-pad:23px;--favorite-offset:22px}
+.art-card-open{display:block;width:100%;color:inherit;text-align:left;cursor:pointer}
+.art-card-open:focus-visible{outline:3px solid var(--accent);outline-offset:-4px}
+.art-card .art-image{height:var(--art-image-height);cursor:pointer}
+.art-card .art-image img{pointer-events:none}
+.art-card .card-body{padding:var(--card-top-pad) 23px 20px}
+.art-card .title-row h3{padding-right:48px}
+.art-card .favorite{position:absolute;top:calc(var(--art-image-height) + var(--card-top-pad) + var(--favorite-offset));right:12px;z-index:1}
+.section-head-guide{align-items:center}
+#art-dialog{width:min(920px,calc(100vw - 40px));max-width:none;max-height:min(90dvh,900px);padding:0;border:1px solid var(--line);border-radius:4px;overflow:auto}
+.art-dialog-shell{position:relative}
+.art-dialog-close{position:sticky;top:8px;float:right;margin:8px 9px -48px 0;z-index:2;width:40px;height:40px;border-radius:50%;background:var(--paper)}
+.art-dialog-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;padding:30px}
+.art-dialog-image{align-self:start;padding:18px;background:#e6e4d9}
+.art-dialog-image img{display:block;width:100%;max-height:72vh;object-fit:contain}
+.art-dialog-copy{min-width:0;padding:12px 22px 0 0}
+.art-dialog-copy h2{font-size:27px;margin:0 46px 8px 0}
+.art-dialog-copy .medium{margin-bottom:14px}
+.dialog-summary{font-size:16px;line-height:1.8;color:var(--ink)}
+.art-dialog-copy .explanation{margin:19px 0}
+.art-dialog-copy .source-links{margin-top:22px}
+@media (max-width:950px) and (min-width:651px){
+ .art-card{--art-image-height:240px;--card-top-pad:18px}
+ .art-card .card-body{padding:var(--card-top-pad) 18px 18px}
+}
+@media (max-width:650px){
+ .section-head-guide{display:flex;gap:8px;margin:20px 0 14px}
+ .section-head-guide h2{font-size:clamp(20px,6.5vw,25px);white-space:nowrap;letter-spacing:0}
+ .section-head-guide .work-total{font-size:12px;margin-left:4px}
+ .section-head-guide .share{flex-shrink:0;font-size:11px;padding:6px 8px}
+ .section-head-guide .share span{margin-left:2px}
+ .art-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .art-card{--art-image-height:132px;--card-top-pad:11px;--favorite-offset:14px}
+ .art-card .art-image{height:var(--art-image-height);padding:7px}
+ .art-card .card-body{padding:var(--card-top-pad) 9px 12px}
+ .art-card .artist{font-size:10px;line-height:1.35;margin-right:25px}
+ .art-card .title-row h3{font-size:16px;line-height:1.4;padding-right:28px;margin-bottom:0}
+ .art-card .favorite{right:4px;min-width:30px;min-height:30px;font-size:21px}
+ .art-card .medium{font-size:10px;line-height:1.4;margin:5px 0 0}
+ .art-card .prompt{display:none}
+ #art-dialog{width:calc(100vw - 20px);max-height:92dvh}
+ .art-dialog-layout{grid-template-columns:1fr;gap:14px;padding:16px}
+ .art-dialog-image{padding:10px}
+ .art-dialog-image img{max-height:32vh}
+ .art-dialog-copy{padding:0}
+ .art-dialog-copy .artist{font-size:12px;margin-right:40px}
+ .art-dialog-copy h2{font-size:23px}
+ .art-dialog-copy .explanation{margin:16px 0}
+ .art-dialog-copy .explanation p{font-size:14px;line-height:1.8}
+}
