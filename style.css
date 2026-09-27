@@ -55,3 +55,32 @@
  .art-dialog-copy .explanation{margin:16px 0}
  .art-dialog-copy .explanation p{font-size:14px;line-height:1.8}
 }
+
+/* Curated first-look selection */
+.section-head-guide{margin-bottom:10px}
+.guide-intro{font-size:14px;color:var(--muted);margin:0 0 20px}
+.art-card .favorite{top:10px;right:10px;background:var(--white);border-radius:50%;box-shadow:0 1px 5px #0002}
+.art-card .work-kind{margin-bottom:10px;letter-spacing:1px}
+.art-image-placeholder{background:#e5e0d3;padding:28px;text-align:center;color:var(--accent)}
+.art-image-placeholder>span:first-child{max-width:170px;font-family:"Songti SC",serif;font-size:20px;line-height:1.5}
+.onsite-tip{margin:26px 0 20px;padding:16px 20px;border-left:3px solid var(--accent);background:#ebe8df;font-size:13px}
+.onsite-tip strong{font-size:14px}
+.onsite-tip p{margin:4px 0 7px;color:var(--muted)}
+.onsite-tip a{font-size:12px}
+.more-works{margin-top:24px;padding:17px 0;border-bottom:1px solid var(--line)}
+.more-works>summary{font-size:17px;color:var(--ink)}
+.more-works>summary span{font-size:12px;color:var(--muted);margin-left:6px}
+.more-works .art-grid{margin-top:20px}
+.art-dialog-text-only{grid-template-columns:1fr;max-width:680px;margin:auto}
+.art-dialog-text-only .art-dialog-copy{padding-right:0}
+.image-note{font-size:13px;color:var(--accent);border-left:2px solid var(--accent);padding-left:12px}
+@media (max-width:650px){
+ .section-head-guide{margin-bottom:8px}
+ .guide-intro{font-size:12px;line-height:1.6;margin-bottom:14px}
+ .art-card .favorite{top:5px;right:5px}
+ .art-card .work-kind{font-size:10px;letter-spacing:0;padding:2px 5px;margin-bottom:7px;line-height:1.3}
+ .art-image-placeholder{padding:13px}
+ .art-image-placeholder>span:first-child{font-size:14px;max-width:100px}
+ .onsite-tip{padding:12px 14px;margin:20px 0}
+ .more-works>summary{font-size:15px}
+}

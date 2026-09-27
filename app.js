@@ -1,4 +1,20 @@
 let state={saved:[],notes:{}};
+const featured=[
+ ['picasso-celestina-dove','首次公开'],
+ ['lu-xun-kollwitz-album','限量103册'],
+ ['warhol-flowers','《花》系列'],
+ ['picasso','1952年海报'],
+ ['miro-work-2','色彩与符号'],
+ ['dali-paradise','超现实主义'],
+ ['zhao','《四季》系列'],
+ ['mucha-untitled-3','装饰艺术'],
+ ['xu-kuang-faraway','中国木刻'],
+ ['tan-ping-untitled','当代抽象']
+];
+const featuredLabels=Object.fromEntries(featured);
+const featuredWorks=featured.map(([id])=>works.find(w=>w.id===id));
+if(featuredWorks.some(w=>!w))throw Error('优先看的作品缺少资料');
+const otherWorks=works.filter(w=>!featuredLabels[w.id]);
 let storageAvailable=true;
 try{
  const v=JSON.parse(localStorage.getItem('print-guide-v1'));
@@ -26,7 +42,7 @@ function setSaved(id,value){
  return {id,saved:value};
 }
 function artworkMeta(w){return [w.year,w.medium,w.size].filter(Boolean).join(' / ')}
-function card(w,notes=false){
+function card(w,notes=false,number=null){
  const article=document.createElement('article');
  article.className='art-card';
  article.id=(notes?'saved-':'work-')+w.id;
@@ -35,20 +51,25 @@ function card(w,notes=false){
  opener.setAttribute('role','button');
  opener.setAttribute('tabindex','0');
  opener.setAttribute('aria-haspopup','dialog');
- opener.setAttribute('aria-label',`打开${w.artist}《${w.title}》的图片和详细讲解`);
- const index=works.indexOf(w)+1;
+ opener.setAttribute('aria-label',`打开${w.artist}《${w.title}》的详细讲解`);
+ const box=document.createElement('div');
+ box.className='art-image';
  if(w.image){
-  const box=document.createElement('div');
-  box.className='art-image';
   const img=document.createElement('img');
-  img.src=w.image;img.alt=w.artist+'《'+w.title+'》';img.loading=index<=3?'eager':'lazy';
-  const num=document.createElement('span');
-  num.className='number';num.textContent=String(index).padStart(2,'0');
-  box.append(img,num);opener.append(box);
+  img.src=w.image;img.alt=w.artist+'《'+w.title+'》';img.loading=number!==null&&number<=3?'eager':'lazy';
+  box.append(img);
+ }else{
+  box.classList.add('art-image-placeholder');
+  const notice=document.createElement('span');
+  notice.textContent='暂无本展展品图 · 到现场看原件';
+  box.append(notice);
  }
+ if(number!==null){const num=document.createElement('span');num.className='number';num.textContent=String(number).padStart(2,'0');box.append(num)}
+ opener.append(box);
  const body=document.createElement('div');
  body.className='card-body';
- body.innerHTML=`${w.kind?`<span class="work-kind">${w.kind}</span>`:''}<div class="artist">${w.artist}</div><div class="title-row"><h3>${w.title}</h3></div>${artworkMeta(w)?`<div class="medium">${artworkMeta(w)}</div>`:''}<p class="prompt">${w.summary}</p>`;
+ const label=featuredLabels[w.id]||w.kind;
+ body.innerHTML=`${label?`<span class="work-kind">${label}</span>`:''}<div class="artist">${w.artist}</div><div class="title-row"><h3>${w.title}</h3></div>${artworkMeta(w)?`<div class="medium">${artworkMeta(w)}</div>`:''}<p class="prompt">${w.summary}</p>`;
  opener.append(body);
  opener.addEventListener('click',()=>showArtwork(w,opener));
  opener.addEventListener('keydown',event=>{
@@ -82,9 +103,10 @@ function showArtwork(w,trigger){
  const dialog=document.getElementById('art-dialog');
  const content=document.getElementById('art-dialog-content');
  const image=w.image?`<div class="art-dialog-image"><img src="${w.image}" alt="${w.artist}《${w.title}》"></div>`:'';
+ const imageNote=w.imageNote?`<p class="image-note">${w.imageNote}</p>`:'';
  const sections=w.sections.map(s=>`<section class="explanation"><h4>${s.heading}</h4><p>${s.text}</p></section>`).join('');
  const sources=w.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title} ↗</a>`).join('');
- content.innerHTML=`<div class="art-dialog-layout">${image}<div class="art-dialog-copy"><div class="artist">${w.artist}</div><h2 id="art-dialog-title">${w.title}</h2>${artworkMeta(w)?`<div class="medium">${artworkMeta(w)}</div>`:''}<p class="dialog-summary">${w.summary}</p>${sections}<div class="source-links">${sources}</div></div></div>`;
+ content.innerHTML=`<div class="art-dialog-layout${w.image?'':' art-dialog-text-only'}">${image}<div class="art-dialog-copy"><div class="artist">${w.artist}</div><h2 id="art-dialog-title">${w.title}</h2>${artworkMeta(w)?`<div class="medium">${artworkMeta(w)}</div>`:''}<p class="dialog-summary">${w.summary}</p>${imageNote}${sections}<div class="source-links">${sources}</div></div></div>`;
  dialog.returnValue='';
  dialog.showModal();
  dialog.querySelector('.art-dialog-close').onclick=()=>dialog.close();
@@ -92,7 +114,10 @@ function showArtwork(w,trigger){
  if(trigger)dialog.addEventListener('close',()=>{if(trigger.isConnected)trigger.focus({preventScroll:true})},{once:true});
 }
 function render(){
- document.getElementById('art-grid').replaceChildren(...works.map(w=>card(w)));
+ document.getElementById('art-grid').replaceChildren(...featuredWorks.map((w,i)=>card(w,false,i+1)));
+ document.getElementById('more-grid').replaceChildren(...otherWorks.map((w,i)=>card(w,false,featuredWorks.length+i+1)));
+ document.getElementById('featured-count').textContent=`${featuredWorks.length} 件（套）`;
+ document.getElementById('more-count').textContent=`${otherWorks.length} 件`;
  document.getElementById('saved-grid').replaceChildren(...works.filter(w=>state.saved.includes(w.id)).map(w=>card(w,true)));
  document.getElementById('saved-count').textContent=state.saved.length;
  document.getElementById('empty').hidden=state.saved.length>0;
