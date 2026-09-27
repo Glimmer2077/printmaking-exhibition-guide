@@ -590,8 +590,10 @@ const works = [
     "year": 1936,
     "medium": "版画选集",
     "size": null,
-    "image": null,
-    "imageNote": "公开报道尚未提供可核对的本展印本照片，请到现场看原件。",
+    "image": "images/lu-xun-kollwitz-album-1936-source.jpg",
+    "imageAlt": "1936年《凯绥·珂勒惠支版画选集》封面，故宫博物院研究文章配图",
+    "imageContext": "同版资料图",
+    "imageNote": "图为故宫博物院研究文章中的1936年版画选集封面（图12），并非本展展品实拍；到现场请核对展签与实物。",
     "sources": [
       {
         "title": "展览报道：1936年印本与限量信息",
@@ -600,6 +602,10 @@ const works = [
       {
         "title": "南方+：本展特别展出",
         "url": "https://static.nfnews.com/content/202609/12/c12811916.html"
+      },
+      {
+        "title": "故宫博物院研究文章：1936年选集封面（第9页，图12）",
+        "url": "https://www.dpm.org.cn/Uploads/File/2020/02/26/u5e560dd4e23aa.pdf"
       }
     ],
     "summary": "本展特别展出的历史印本。鲁迅1936年自费编印，仅印行103册。",

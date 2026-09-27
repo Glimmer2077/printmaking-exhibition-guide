@@ -56,8 +56,13 @@ function card(w,notes=false,number=null){
  box.className='art-image';
  if(w.image){
   const img=document.createElement('img');
-  img.src=w.image;img.alt=w.artist+'《'+w.title+'》';img.loading=number!==null&&number<=3?'eager':'lazy';
+  img.src=w.image;img.alt=w.imageAlt||w.artist+'《'+w.title+'》';img.loading=number!==null&&number<=3?'eager':'lazy';
   box.append(img);
+  if(w.imageContext){
+   const context=document.createElement('span');
+   context.className='image-context';context.textContent=w.imageContext;
+   box.append(context);
+  }
  }else{
   box.classList.add('art-image-placeholder');
   const notice=document.createElement('span');
@@ -102,7 +107,7 @@ function card(w,notes=false,number=null){
 function showArtwork(w,trigger){
  const dialog=document.getElementById('art-dialog');
  const content=document.getElementById('art-dialog-content');
- const image=w.image?`<div class="art-dialog-image"><img src="${w.image}" alt="${w.artist}《${w.title}》"></div>`:'';
+ const image=w.image?`<div class="art-dialog-image"><img src="${w.image}" alt="${w.imageAlt||w.artist+'《'+w.title+'》'}"></div>`:'';
  const imageNote=w.imageNote?`<p class="image-note">${w.imageNote}</p>`:'';
  const sections=w.sections.map(s=>`<section class="explanation"><h4>${s.heading}</h4><p>${s.text}</p></section>`).join('');
  const sources=w.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title} ↗</a>`).join('');

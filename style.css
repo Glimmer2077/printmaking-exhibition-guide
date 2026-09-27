@@ -74,6 +74,7 @@
 .art-dialog-text-only{grid-template-columns:1fr;max-width:680px;margin:auto}
 .art-dialog-text-only .art-dialog-copy{padding-right:0}
 .image-note{font-size:13px;color:var(--accent);border-left:2px solid var(--accent);padding-left:12px}
+.image-context{position:absolute;right:9px;bottom:9px;padding:2px 7px;background:#fffef9eb;color:var(--ink);font-size:11px;line-height:1.5;border-radius:2px}
 @media (max-width:650px){
  .section-head-guide{margin-bottom:8px}
  .guide-intro{font-size:12px;line-height:1.6;margin-bottom:14px}
